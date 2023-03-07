@@ -37,12 +37,8 @@ export class UsersService {
 
     const user: UserEntity = await this.usersUoW.createSocialProfile(
       registerUserDto,
-      'Hamada',
+      password,
     );
-    // const user: UserEntity = await this.usersRepository.create({
-    //   ...registerUserDto,
-    //   password,
-    // });
 
     const verificationToken: number = this.rngService.generateRandomToken();
 
