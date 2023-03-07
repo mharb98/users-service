@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { CommonModule } from '../../common/common.module';
 import { PrismaModule } from '../../prisma/prisma.module';
 import { PrismaUsers } from './repositories/prisma-users.repository';
+import { UsersUnitOfWork } from './repositories/users.unit-of-work';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
@@ -21,6 +22,7 @@ import { UsersService } from './users.service';
       provide: 'UsersRepository',
       useClass: PrismaUsers,
     },
+    UsersUnitOfWork,
   ],
 })
 export class UsersModule {}

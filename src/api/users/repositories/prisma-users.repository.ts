@@ -14,6 +14,7 @@ import { FindUniqueUserInput } from '../interfaces/find-unique-user-input.interf
 import { SortUsersInput } from '../interfaces/sort-users-input.interface';
 import { UpdateUserInput } from '../interfaces/update-user-input.interface';
 import { UsersRepositoryInterface } from './users-repository.interface';
+import { UsersSerializer } from './users-serializer.object';
 
 @Injectable()
 export class PrismaUsers implements UsersRepositoryInterface {
@@ -23,6 +24,7 @@ export class PrismaUsers implements UsersRepositoryInterface {
     try {
       return await this.prisma.user.create({
         data: createUserInput,
+        select: UsersSerializer,
       });
     } catch (error) {
       if (error.code === 'P2002') {
@@ -41,6 +43,7 @@ export class PrismaUsers implements UsersRepositoryInterface {
       return await this.prisma.user.update({
         where: findUniqueUserInput,
         data: updateUserInput,
+        select: UsersSerializer,
       });
     } catch (error) {
       if (error.code === 'P2025') {
@@ -57,6 +60,7 @@ export class PrismaUsers implements UsersRepositoryInterface {
     try {
       return await this.prisma.user.findUniqueOrThrow({
         where: findUniqueUserInput,
+        select: UsersSerializer,
       });
     } catch (error) {
       if (error.code === 'P2025') {
@@ -85,6 +89,7 @@ export class PrismaUsers implements UsersRepositoryInterface {
         where: queryObject,
         skip: paginationInput.page - 1,
         take: paginationInput.pageSize * paginationInput.page,
+        select: UsersSerializer,
         // orderBy: sortUsersInput,
       });
     } catch (error) {

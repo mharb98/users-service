@@ -15,11 +15,13 @@ import { RngService } from '../../common/rng/rng.service';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
 import { UsersRepositoryInterface } from './repositories/users-repository.interface';
+import { UsersUnitOfWork } from './repositories/users.unit-of-work';
 
 @Injectable()
 export class UsersService {
   constructor(
     private passwordService: PasswordService,
+    private usersUoW: UsersUnitOfWork,
     private rngService: RngService,
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     @Inject('UsersRepository')
@@ -28,15 +30,19 @@ export class UsersService {
     private mailingQueue: Queue,
   ) {}
 
-  async registerUser(registerUserDto: RegisterUserDto): Promise<UserEntity> {
+  async registerUser(registerUserDto: RegisterUserDto): Promise<any> {
     const password = await this.passwordService.hashPassword(
       registerUserDto.password,
     );
 
-    const user: UserEntity = await this.usersRepository.create({
-      ...registerUserDto,
-      password,
-    });
+    const user: UserEntity = await this.usersUoW.createSocialProfile(
+      registerUserDto,
+      'Hamada',
+    );
+    // const user: UserEntity = await this.usersRepository.create({
+    //   ...registerUserDto,
+    //   password,
+    // });
 
     const verificationToken: number = this.rngService.generateRandomToken();
 
@@ -50,8 +56,7 @@ export class UsersService {
       email: registerUserDto.email,
       token: verificationToken,
     });
-    console.log('Marwan');
-    delete user.password;
+    // return 'Emad';
 
     return user;
   }

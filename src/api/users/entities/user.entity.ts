@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Gender, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 
 export class UserEntity implements User {
@@ -26,13 +26,6 @@ export class UserEntity implements User {
     example: '+201010101010',
   })
   phone: string;
-
-  @ApiProperty({
-    description: 'User gender that is used for targeted campaigns',
-    enum: Gender,
-    example: Gender.Female,
-  })
-  gender: Gender;
 
   @Exclude()
   password: string;

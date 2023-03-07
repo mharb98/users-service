@@ -37,7 +37,7 @@ export class UsersController {
   @ApiOperation({
     description: 'Registers users into the charity app platform',
     summary:
-      "Takes in an email, a name, a password, and optionally a phone number to register a user, A user can't sign up with an existing email",
+      "Taes in an email, a name, a password, and optionally a phone number to register a user, A user can't sign up with an existing email",
   })
   @ApiCreatedResponse({
     description: 'User has been created successfully',
@@ -45,9 +45,8 @@ export class UsersController {
   })
   @ApiConflictResponse({ description: 'User already exists' })
   @Post()
-  async registerUser(
-    @Body() registerUserDto: RegisterUserDto,
-  ): Promise<UserEntity> {
+  async registerUser(@Body() registerUserDto: RegisterUserDto): Promise<any> {
+    // return 'Marwan';
     return await this.usersService.registerUser(registerUserDto);
   }
 
