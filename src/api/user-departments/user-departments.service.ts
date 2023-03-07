@@ -33,5 +33,7 @@ export class UserDepartmentsService {
   async changeDepartmentRole(
     userDepartmentId: number,
     role: DepartmentRole,
-  ): Promise<void> {}
+  ): Promise<void> {
+    await this.repository.update(userDepartmentId, { role });
+  }
 }

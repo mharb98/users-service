@@ -12,8 +12,7 @@ export interface UserDepartmentsRepository {
   delete(deleteUserDepartmentInput: DeleteUserDepartmentInput): Promise<void>;
 
   update(
-    organizationProfileId: number,
-    department: Department,
+    userDepartmentId: number,
     UpdateUserDepartmentInput: UpdateUserDepartmentInput,
   ): Promise<UserDepartmentEntity>;
 }

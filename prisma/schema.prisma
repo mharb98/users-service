@@ -115,12 +115,13 @@ model OrganizationInvitation {
 }
 
 model UserDepartment {
+  id                    Int                 @id @default(autoincrement())
   organizationProfile   OrganizationProfile @relation(fields: [organizationProfileId], references: [id])
   organizationProfileId Int                 @map("organization_profile_id")
   department            Department
   role                  DepartmentRole
 
-  @@id([department, organizationProfileId])
+  @@unique([department, organizationProfileId])
   @@map("user_departments")
 }
 

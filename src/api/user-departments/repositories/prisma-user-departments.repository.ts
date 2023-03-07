@@ -49,17 +49,13 @@ export class PrismaUserDepartments implements UserDepartmentsRepository {
   }
 
   async update(
-    organizationProfileId: number,
-    department: Department,
+    userDepartmentId: number,
     updateUserDepartmentInput: UpdateUserDepartmentInput,
   ): Promise<UserDepartmentEntity> {
     try {
       return await this.prisma.userDepartment.update({
         where: {
-          department_organizationProfileId: {
-            organizationProfileId: organizationProfileId,
-            department: department,
-          },
+          id: userDepartmentId,
         },
         data: {
           role: updateUserDepartmentInput.role,
