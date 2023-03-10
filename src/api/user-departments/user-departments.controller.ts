@@ -19,7 +19,7 @@ import { ChangeDepartmentRoleDto } from './dtos/change-department-role.dto';
 import { RemoveDepartmentDto } from './dtos/remove-department.dto';
 import { UserDepartmentsService } from './user-departments.service';
 
-@ApiTags('user-departments')
+@ApiTags('User Departments')
 @Controller()
 export class UserDepartmentsController {
   constructor(private userDepartmentsService: UserDepartmentsService) {}

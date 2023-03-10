@@ -104,7 +104,7 @@ export class UsersController {
     type: UserEntity,
   })
   @ApiNotFoundResponse({ description: 'Could not find user' })
-  @Patch(':userId/toggleUserActivity')
+  @Patch(':userId/toggle-user-activity')
   async toggleUserActivity(
     @Param('userId', ParseIntPipe) userId: number,
   ): Promise<UserEntity> {
@@ -119,7 +119,7 @@ export class UsersController {
   @ApiNoContentResponse({ description: 'Account verified successfully' })
   @ApiNotFoundResponse({ description: 'Could not find specified user' })
   @ApiBadRequestResponse({ description: 'Verification token is not correct' })
-  @Patch(':email/verifyAccout')
+  @Patch(':email/verify-accout')
   async verifyAccount(
     @Param('email') email: string,
     @Body() verificationTokenDto: VerificationTokenDto,
@@ -127,7 +127,7 @@ export class UsersController {
     await this.usersService.verifyAccount(email, verificationTokenDto.token);
   }
 
-  @Post(':email/resendVerificationToken')
+  @Post(':email/resend-verification-token')
   async resendVerificationTokne(@Param('email') email: string): Promise<void> {
     await this.usersService.resendVerificationToken(email);
   }

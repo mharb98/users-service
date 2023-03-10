@@ -6,7 +6,7 @@ import {
 import { PrismaService } from '../../../prisma/prisma.service';
 import { UserEntity } from '../../users/entities/user.entity';
 import { RegisterUserDto } from '../dtos/register-user.dto';
-import { UsersSerializer } from './users-serializer.object';
+import { UsersSerializer } from '../serializers/users.serializer';
 
 @Injectable()
 export class UsersUnitOfWork {

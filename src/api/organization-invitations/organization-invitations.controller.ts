@@ -20,7 +20,7 @@ import { OrganizationInvitationDto } from './dtos/create-organization-invitation
 import { OrganizationInvitationEntity } from './entities/organization-invitation.entity';
 import { OrganizationInvitationsService } from './organization-invitations.service';
 
-@ApiTags('organizations-invitations')
+@ApiTags('Organizations Invitations')
 @Controller()
 export class OrganizationInvitationsController {
   constructor(
@@ -77,7 +77,7 @@ export class OrganizationInvitationsController {
     description: 'Invitation was not found',
   })
   @HttpCode(204)
-  @Post('/organization-invitations/:invitationId/resendInvitation')
+  @Post('/organization-invitations/:invitationId/resend-invitation')
   async resendInvitation(
     @Param('invitationId') invitationId: number,
   ): Promise<void> {
@@ -95,7 +95,7 @@ export class OrganizationInvitationsController {
       'Invitation has already been accepted OR Token has expired OR Incorrect token',
   })
   @HttpCode(204)
-  @Post('/organization-invitations/:invitationId/acceptInvitation')
+  @Post('/organization-invitations/:invitationId/accept-invitation')
   async acceptInvitation(
     @Body() acceptInvitationDto: AcceptInvitationDto,
   ): Promise<void> {

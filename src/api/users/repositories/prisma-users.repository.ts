@@ -14,7 +14,7 @@ import { FindUniqueUserInput } from '../interfaces/find-unique-user-input.interf
 import { SortUsersInput } from '../interfaces/sort-users-input.interface';
 import { UpdateUserInput } from '../interfaces/update-user-input.interface';
 import { UsersRepositoryInterface } from './users-repository.interface';
-import { UsersSerializer } from './users-serializer.object';
+import { UsersSerializer } from '../serializers/users.serializer';
 
 @Injectable()
 export class PrismaUsers implements UsersRepositoryInterface {

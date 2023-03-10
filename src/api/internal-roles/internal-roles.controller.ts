@@ -16,7 +16,7 @@ import {
 import { InternalRoleDto } from './dtos/internal-role.dto';
 import { InternalRolesService } from './internal-roles.service';
 
-@ApiTags('internal-profiles')
+@ApiTags('Internal Profile Roles')
 @ApiNotFoundResponse({ description: 'Internal user could not be found' })
 @Controller('internal-profiles/:internalProfileId/internal-roles')
 export class InternalRolesController {
