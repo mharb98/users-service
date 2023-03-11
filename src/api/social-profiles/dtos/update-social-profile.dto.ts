@@ -8,6 +8,6 @@ export class UpdateSocialProfileDto {
     enum: Gender,
     example: Gender.Female,
   })
-  @IsEnum({ Gender })
+  @IsEnum(Gender)
   gender?: Gender;
 }

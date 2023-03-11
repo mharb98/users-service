@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Put } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Put } from '@nestjs/common';
 import {
   ApiNoContentResponse,
   ApiNotFoundResponse,
@@ -72,7 +72,7 @@ export class SocialProfilesController {
   @Put(':socialProfileId')
   async updateSocialProfile(
     @Param('socialProfileId') socialProfileId: number,
-    updateSocialProfileDto: UpdateSocialProfileDto,
+    @Body() updateSocialProfileDto: UpdateSocialProfileDto,
   ): Promise<SocialProfileEntity> {
     return await this.socialProfilesService.updateSocialProfile(
       socialProfileId,
