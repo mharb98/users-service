@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Organization, OrganizationProfile } from '@prisma/client';
+import { OrganizationProfile } from '@prisma/client';
+import { OrganizationEntity } from '../../../organizations/entities/organization.entity';
 import { UserDepartmentEntity } from '../../user-departments/entites/user-department.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 
@@ -48,9 +49,9 @@ export class OrganizationProfileEntity implements OrganizationProfile {
 
   @ApiProperty({
     description: 'Organization entity to which the user belongs',
-    // type:
+    type: OrganizationEntity,
   })
-  organization?: Organization;
+  organization?: OrganizationEntity;
 
   @ApiProperty({
     description: 'User entity associated with organization profile',
