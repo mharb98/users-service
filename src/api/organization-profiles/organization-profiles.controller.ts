@@ -20,7 +20,10 @@ export class OrganizationProfilesController {
     description:
       'Takes an organization profile id and returns user organization details',
   })
-  @ApiOkResponse({ description: 'Returns an organization profile entity' })
+  @ApiOkResponse({
+    description: 'Returns an organization profile entity',
+    type: OrganizationProfileEntity,
+  })
   @ApiNotFoundResponse({
     description: 'Could not find specified organization profile',
   })

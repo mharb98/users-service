@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { InternalProfile, InternalRoles, User } from '@prisma/client';
+import { InternalProfile } from '@prisma/client';
+import { InternalRoleEntity } from '../../internal-roles/entities/internal-role.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 
 export class InternalProfileEntity implements InternalProfile {
   @ApiProperty({
@@ -39,14 +41,14 @@ export class InternalProfileEntity implements InternalProfile {
 
   @ApiProperty({
     description: 'Roles associated with a user',
-    // type: InternalRoles,
+    type: InternalRoleEntity,
     isArray: true,
   })
-  roles?: InternalRoles[];
+  roles?: InternalRoleEntity[];
 
   @ApiProperty({
     description: 'Roles associated with a user',
-    isArray: true,
+    type: UserEntity,
   })
-  user?: User;
+  user?: UserEntity;
 }
