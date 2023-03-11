@@ -8,6 +8,7 @@ import { redisStore } from 'cache-manager-redis-store';
 import { BullModule } from '@nestjs/bull';
 import { JobProcessorsModule } from './job-processors/job-processors.module';
 import { InternalInvitationsModule } from './api/internal-invitations/internal-invitations.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { InternalInvitationsModule } from './api/internal-invitations/internal-i
     }),
     JobProcessorsModule,
     InternalInvitationsModule,
+    OrganizationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

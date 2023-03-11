@@ -6,6 +6,7 @@ import { InternalRolesModule } from './internal-roles/internal-roles.module';
 import { OrganizationInvitationsModule } from './organization-invitations/organization-invitations.module';
 import { OrganizationProfilesModule } from './organization-profiles/organization-profiles.module';
 import { UserDepartmentsModule } from './user-departments/user-departments.module';
+import { SocialProfilesModule } from './social-profiles/social-profiles.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UserDepartmentsModule } from './user-departments/user-departments.modul
     OrganizationInvitationsModule,
     OrganizationProfilesModule,
     UserDepartmentsModule,
+    SocialProfilesModule,
   ],
   controllers: [],
   providers: [],
