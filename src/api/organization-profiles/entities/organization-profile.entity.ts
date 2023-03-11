@@ -1,9 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  Organization,
-  OrganizationProfile,
-  UserDepartment,
-} from '@prisma/client';
+import { Organization, OrganizationProfile } from '@prisma/client';
 import { UserDepartmentEntity } from '../../user-departments/entites/user-department.entity';
 import { UserEntity } from '../../users/entities/user.entity';
 
