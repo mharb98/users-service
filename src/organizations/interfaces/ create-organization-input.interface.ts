@@ -1,4 +1,4 @@
 export interface CreateOrganizationInput {
-  id: number;
+  organizationId: string;
   name: string;
 }

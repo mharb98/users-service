@@ -15,8 +15,8 @@ import { InternalInvitationsRepository } from './repositories/internal-invitatio
 import { InternalInvitationEntity } from './entities/internal-invitation.entity';
 import { InternalInvitationUnitOfWork } from './repositories/internal-invitation.unit-of-work';
 import { PasswordService } from '../../common/hashing/password.service';
-import { InternalUserProducersService } from '../../users-producers/internal-user-producers/internal-user-producers.service';
 import { InternalProfileEntity } from '../internal-profiles/entities/internal-profile.entity';
+import { InternalUserProducersService } from '../../users-producers/internal-user-producers/internal-user-producers.service';
 
 @Injectable()
 export class InternalInvitationsService {

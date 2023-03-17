@@ -26,16 +26,18 @@ export class OrganizationsConsumer implements OnModuleInit {
     switch (key) {
       case 'create-organization':
         this.handleOrganizationCreation(value);
-        return;
+        break;
       default:
         return;
     }
   }
 
-  private async handleOrganizationCreation(message) {
-    const id: number = message.id;
+  private async handleOrganizationCreation(message: any) {
+    const organizationId: string = message.id;
     const name: string = message.name;
-
-    await this.organizationsService.createOrganization({ id, name });
+    await this.organizationsService.createOrganization({
+      organizationId,
+      name,
+    });
   }
 }

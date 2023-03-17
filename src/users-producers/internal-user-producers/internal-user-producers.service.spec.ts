@@ -9,7 +9,9 @@ describe('InternalUserProducersService', () => {
       providers: [InternalUserProducersService],
     }).compile();
 
-    service = module.get<InternalUserProducersService>(InternalUserProducersService);
+    service = module.get<InternalUserProducersService>(
+      InternalUserProducersService,
+    );
   });
 
   it('should be defined', () => {

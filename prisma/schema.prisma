@@ -12,7 +12,8 @@ datasource db {
 }
 
 model Organization {
-  id                      Int                      @id
+  id                      Int                      @id @default(autoincrement())
+  organizationId          String                   @unique()
   name                    String
   organizationProfiles    OrganizationProfile[]
   organizationInvitations OrganizationInvitation[]

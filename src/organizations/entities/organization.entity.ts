@@ -7,6 +7,12 @@ export class OrganizationEntity implements Organization {
 
   @ApiProperty({
     type: String,
+    description: 'ID of organization in organizations service',
+  })
+  organizationId: string;
+
+  @ApiProperty({
+    type: String,
     description: 'Name of organization',
     example: 'Organization Name',
   })
