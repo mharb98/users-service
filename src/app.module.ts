@@ -9,6 +9,9 @@ import { BullModule } from '@nestjs/bull';
 import { JobProcessorsModule } from './job-processors/job-processors.module';
 import { InternalInvitationsModule } from './api/internal-invitations/internal-invitations.module';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { BrokersModule } from './Brokers/brokers.module';
+import { TestConsumer } from './test.consumer';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -23,6 +26,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
         port: process.env.REDIS_PORT,
       },
     }),
+    ConfigModule.forRoot({ isGlobal: true }),
     BullModule.forRoot({
       redis: {
         host: process.env.REDIS_HOST,
@@ -35,8 +39,9 @@ import { OrganizationsModule } from './organizations/organizations.module';
     JobProcessorsModule,
     InternalInvitationsModule,
     OrganizationsModule,
+    BrokersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TestConsumer],
 })
 export class AppModule {}
