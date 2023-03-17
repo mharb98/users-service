@@ -21,11 +21,7 @@ export class InternalRolesService {
       role,
     );
 
-    await this.internalUsersProducer.createModerator({
-      id: internalProfileId,
-      name: internalRoleEntity.internalProfile.user.name,
-      email: internalRoleEntity.internalProfile.user.email,
-    });
+    await this.handleRoleAdditionEvent(internalRoleEntity);
   }
 
   async removeRoleFromUser(
@@ -33,6 +29,35 @@ export class InternalRolesService {
     role: InternalRole,
   ): Promise<void> {
     await this.repository.delete(internalProfileId, role);
-    await this.internalUsersProducer.deleteModerator(internalProfileId);
+    await this.handleRoleRemovalEvent(internalProfileId, role);
+  }
+
+  private async handleRoleAdditionEvent(
+    internalRoleEntity: InternalRoleEntity,
+  ) {
+    switch (internalRoleEntity.role) {
+      case 'Moderator':
+        await this.internalUsersProducer.createModerator({
+          id: internalRoleEntity.internalProfileId,
+          name: internalRoleEntity.internalProfile.user.name,
+          email: internalRoleEntity.internalProfile.user.email,
+        });
+        break;
+      default:
+        return;
+    }
+  }
+
+  private async handleRoleRemovalEvent(
+    internalProfileId: number,
+    role: InternalRole,
+  ) {
+    switch (role) {
+      case 'Moderator':
+        await this.internalUsersProducer.deleteModerator(internalProfileId);
+        break;
+      default:
+        return;
+    }
   }
 }
