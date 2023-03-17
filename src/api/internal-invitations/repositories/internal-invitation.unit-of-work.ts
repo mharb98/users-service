@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InternalRole } from '@prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { InternalProfileEntity } from '../../internal-profiles/entities/internal-profile.entity';
+import { InternalProfileSerializer } from '../../internal-profiles/serializers/internal-profile-include.serializer';
 import { UserEntity } from '../../users/entities/user.entity';
 
 @Injectable()
@@ -12,7 +13,7 @@ export class InternalInvitationUnitOfWork {
     email: string,
     role: InternalRole,
     password: string,
-  ): Promise<UserEntity> {
+  ): Promise<InternalProfileEntity> {
     return await this.prisma.$transaction(async (tx: PrismaService) => {
       // 1. Create the user
       const user: UserEntity = await tx.user.upsert({
@@ -32,16 +33,18 @@ export class InternalInvitationUnitOfWork {
         await tx.internalProfile.create({
           data: {
             user: { connect: { id: user.id } },
+            roles: { create: { role: role } },
           },
+          include: InternalProfileSerializer,
         });
 
-      // 3. Add the internal role to the user
-      await tx.internalRoles.create({
-        data: {
-          internalProfile: { connect: { id: internalProfile.id } },
-          role: role,
-        },
-      });
+      // // 3. Add the internal role to the user
+      // await tx.internalRoles.create({
+      //   data: {
+      //     internalProfile: { connect: { id: internalProfile.id } },
+      //     role: role,
+      //   },
+      // });
 
       // 4. Mark the internal invitation entity as accepted
       await tx.internalInvitation.update({
@@ -53,7 +56,7 @@ export class InternalInvitationUnitOfWork {
         },
       });
 
-      return user;
+      return internalProfile;
     });
   }
 }

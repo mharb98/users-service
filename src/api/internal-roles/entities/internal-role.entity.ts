@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { InternalRole, InternalRoles } from '@prisma/client';
+import { InternalProfileEntity } from '../../internal-profiles/entities/internal-profile.entity';
 
 export class InternalRoleEntity implements InternalRoles {
   @ApiProperty({
@@ -15,4 +16,6 @@ export class InternalRoleEntity implements InternalRoles {
     example: 'Admin',
   })
   role: InternalRole;
+
+  internalProfile?: InternalProfileEntity;
 }

@@ -14,8 +14,9 @@ import { RngService } from '../../common/rng/rng.service';
 import { InternalInvitationsRepository } from './repositories/internal-invitations-repository.interface';
 import { InternalInvitationEntity } from './entities/internal-invitation.entity';
 import { InternalInvitationUnitOfWork } from './repositories/internal-invitation.unit-of-work';
-import { UserEntity } from '../users/entities/user.entity';
 import { PasswordService } from '../../common/hashing/password.service';
+import { InternalUserProducersService } from '../../users-producers/internal-user-producers/internal-user-producers.service';
+import { InternalProfileEntity } from '../internal-profiles/entities/internal-profile.entity';
 
 @Injectable()
 export class InternalInvitationsService {
@@ -29,6 +30,7 @@ export class InternalInvitationsService {
     private cacheManager: Cache,
     @InjectQueue('mailing-queue')
     private mailingQueue: Queue,
+    private internalUserProducer: InternalUserProducersService,
   ) {}
 
   async sendInternalInvitation(
@@ -98,14 +100,22 @@ export class InternalInvitationsService {
 
     const password = this.passwordService.generatePassword();
 
-    const user: UserEntity =
+    const profile: InternalProfileEntity =
       await this.internalInvitationUoW.createInternalProfile(
         email,
         invitation.role,
         password,
       );
 
-    if (!user.confirmed) {
+    this.handleInternalProfileEvents(profile);
+    // if (invitation.role == 'Moderator') {
+    //   this.producerService.produce('users', {
+    //     key: 'create-moderator',
+    //     value: JSON.stringify({ id: user.id, name: user.name }),
+    //   });
+    // }
+
+    if (!profile.user.confirmed) {
       this.mailingQueue.add('password-mail', {
         email,
         password: password,
@@ -131,6 +141,20 @@ export class InternalInvitationsService {
 
     if (invitation && invitation.acceptedAt) {
       throw new BadRequestException('Invitation already accepted');
+    }
+  }
+
+  private async handleInternalProfileEvents(profile: InternalProfileEntity) {
+    const roles = profile.roles.map((role) => {
+      return role.role;
+    });
+
+    if (roles.includes('Moderator')) {
+      await this.internalUserProducer.createModerator({
+        id: profile.id,
+        email: profile.user.email,
+        name: profile.user.name,
+      });
     }
   }
 }

@@ -10,9 +10,8 @@ import { JobProcessorsModule } from './job-processors/job-processors.module';
 import { InternalInvitationsModule } from './api/internal-invitations/internal-invitations.module';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { BrokersModule } from './Brokers/brokers.module';
-import { TestConsumer } from './test.consumer';
 import { ConfigModule } from '@nestjs/config';
-
+import { UsersProducersModule } from './users-producers/users-producers.module';
 @Module({
   imports: [
     PrismaModule,
@@ -40,8 +39,9 @@ import { ConfigModule } from '@nestjs/config';
     InternalInvitationsModule,
     OrganizationsModule,
     BrokersModule,
+    UsersProducersModule,
   ],
   controllers: [AppController],
-  providers: [AppService, TestConsumer],
+  providers: [AppService],
 })
 export class AppModule {}
