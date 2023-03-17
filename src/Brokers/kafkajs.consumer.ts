@@ -4,9 +4,11 @@ import {
   ConsumerConfig,
   ConsumerSubscribeTopics,
   Kafka,
+  KafkaMessage,
 } from 'kafkajs';
 import { sleep } from '../common/sleep/sleep.service';
 import { IConsumer } from './consumer.interface';
+import * as retry from 'async-retry';
 
 export class KafkajsConsumer implements IConsumer {
   private readonly kafka: Kafka;
@@ -44,8 +46,24 @@ export class KafkajsConsumer implements IConsumer {
     await this.consumer.run({
       eachMessage: async ({ message, partition }) => {
         this.logger.debug(`Processing message partition: ${partition}`);
-        await onMessage(message);
+        try {
+          await retry(async () => onMessage(message), {
+            retries: 3,
+            onRetry: (error, attempt) =>
+              this.logger.error(
+                `Error consuming message, executing retry ${attempt}/3`,
+                error,
+              ),
+          });
+        } catch (error) {
+          this.logger.error(`Error consuming message, adding to DQL...`, error);
+          await this.addMessageToDlq(message);
+        }
       },
     });
+  }
+
+  private async addMessageToDlq(message: KafkaMessage) {
+    this.logger.log(`Adding the failed message to the DLQ`);
   }
 }

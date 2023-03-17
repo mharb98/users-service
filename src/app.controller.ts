@@ -11,7 +11,10 @@ export class AppController {
 
   @Get()
   async getHello() {
-    await this.producerService.produce('test', { value: 'Hello world' });
+    await this.producerService.produce('organizations', {
+      key: 'create-organization',
+      value: JSON.stringify({ id: 2, name: 'Organization' }),
+    });
     return 'Hello world';
   }
 }
